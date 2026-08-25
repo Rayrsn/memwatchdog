@@ -20,6 +20,9 @@ release:
 		rustc -O src/main.rs -o $(BINARY_NAME) ; \
 	fi
 
+memstress:
+	rustc -O examples/memstress.rs -o memstress
+
 clean:
 	rm -f $(BINARY_NAME)
 	rm -rf target

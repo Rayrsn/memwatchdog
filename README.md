@@ -91,3 +91,34 @@ Options:
   -v, --verbose                Enable verbose debug output
   -h, --help                   Show help message
 ```
+
+### Manual Usage Examples
+
+- **Test mode (Dry Run - logs action without killing):**
+  ```bash
+  memwatchdog --threshold 200 --dry-run --verbose
+  ```
+
+- **Add custom process exclusions (e.g. don't kill Firefox or Blender):**
+  ```bash
+  memwatchdog --threshold 200 -e firefox -e blender
+  ```
+
+---
+
+## 🧪 Testing with `memstress`
+
+A memory stress testing tool is included in [`examples/memstress.rs`](file:///home/rayr/Projects/memwatchdog/examples/memstress.rs) to test warning notifications and target process termination.
+
+### 1. Build `memstress`
+```bash
+make memstress
+# or: rustc -O examples/memstress.rs -o memstress
+```
+
+### 2. Run Stress Test
+```bash
+# Consumes 2000 MB RAM incrementally (100 MB every 250ms)
+./memstress 2000
+```
+When available memory drops below the threshold, `memwatchdog` will detect `memstress` as the highest memory-consuming process and close it cleanly!

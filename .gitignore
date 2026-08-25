@@ -1,4 +1,5 @@
 /memwatchdog
+/memstress
 /target
 *.o
 *.rlib
