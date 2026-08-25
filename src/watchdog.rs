@@ -1,5 +1,5 @@
 use crate::config::Config;
-use crate::notifier::Logger;
+use crate::notifier::{Logger, Notifier};
 use crate::process::ProcessScanner;
 use crate::sysinfo::SysInfo;
 use crate::terminator::ProcessTerminator;
@@ -66,6 +66,12 @@ impl WatchdogEngine {
                                 stats.available_mb, self.config.warning_threshold_mb
                             ),
                         );
+                        if self.config.notify {
+                            Notifier::send_warning_notification(
+                                stats.available_mb,
+                                self.config.warning_threshold_mb,
+                            );
+                        }
                         last_warned = true;
                     }
                 } else {

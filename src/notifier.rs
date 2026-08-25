@@ -60,13 +60,37 @@ impl Logger {
 pub struct Notifier;
 
 impl Notifier {
+    pub fn send_warning_notification(free_mem_mb: u64, warning_threshold_mb: u64) {
+        let body = format!(
+            "Available RAM is down to {} MB! (Warning threshold: {} MB)",
+            free_mem_mb, warning_threshold_mb
+        );
+        let _ = Command::new("notify-send")
+            .args([
+                "-u", "critical",
+                "-a", "Memory Watchdog",
+                "-h", "string:x-kde-display-app-name:Memory Watchdog",
+                "-h", "int:transient:1",
+                "⚠️ Memory Warning Alert",
+                &body,
+            ])
+            .status();
+    }
+
     pub fn send_desktop_notification(pid: i32, comm: &str, rss_mb: u64, free_mem_mb: u64) {
         let body = format!(
             "Closed {} (PID {}) using {} MB RAM. Available RAM was {} MB.",
             comm, pid, rss_mb, free_mem_mb
         );
         let _ = Command::new("notify-send")
-            .args(["-u", "critical", "Memory Watchdog Alert", &body])
+            .args([
+                "-u", "critical",
+                "-a", "Memory Watchdog",
+                "-h", "string:x-kde-display-app-name:Memory Watchdog",
+                "-h", "int:transient:1",
+                "🚨 Memory Watchdog Action",
+                &body,
+            ])
             .status();
     }
 }
