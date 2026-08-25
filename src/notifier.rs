@@ -38,7 +38,7 @@ impl Logger {
     fn timestamp() -> String {
         let mut ts = [0u8; 32];
         unsafe {
-            let mut now: libc_time_t = 0;
+            let mut now: LibcTimeT = 0;
             time(&mut now);
             let tm = localtime(&now);
             if !tm.is_null() {
