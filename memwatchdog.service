@@ -1,0 +1,15 @@
+[Unit]
+Description=Low Latency Memory Watchdog Daemon (Rust)
+Documentation=https://github.com/
+After=default.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/memwatchdog --threshold 200 --interval 200 --grace 1000 --notify
+Restart=always
+RestartSec=2
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
