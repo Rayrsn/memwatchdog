@@ -1,2 +1,4 @@
-target/
-memwatchdog
+/memwatchdog
+/target
+*.o
+*.rlib
